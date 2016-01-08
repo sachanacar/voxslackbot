@@ -131,10 +131,11 @@ app.post('/', function(req, res){
 	var feature = 'voxsms';
 	var quantity = 1;
 
-	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
-		console.log(req.body.text);
+	// if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+		body = JSON.parse(req.body);
+		console.log(body.text);
 		// var string = req.body.text;
-		
+
 		// var country = req.body.country;
 		// var city = req.body.city;
 		// var type = req.body.didType;
@@ -142,12 +143,12 @@ app.post('/', function(req, res){
 		// var quantity = req.body.quantity;
 		searchDid(0,1,country, city, type, feature, quantity);
 
-	} else{
-		console.log(req.body);
-	}
+	// } else{
+	// 	console.log(req.body);
+	// }
     // console.log('POST /');
     res.setHeader('Content-Type', 'application/json');
-	res.send( "yo", 200 );
+	res.status(200).send("yo");
     // curl -X PUT 'https://sandbox.voxbone.com/ws-voxbone/services/rest/ordering/cart' -u voxtestsacha:nxyppC2h! -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary $'{"customerReference" : "Client #12345","description" : "Cart for client #12345"}'
 });
 
