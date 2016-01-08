@@ -149,8 +149,9 @@ app.post('/', function(req, res){
 		console.log(parameters[2]);
 		console.log(parameters[3]);
 		console.log(parameters[4]);
-
-		searchDid(0,1,country, city, type, feature, quantity);
+		setTimeout(function(){ 
+			searchDid(0,1,country, city, type, feature, quantity);
+		 }, 1000);
 
 	} else{
 		console.log(req.body);
