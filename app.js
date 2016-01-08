@@ -125,11 +125,6 @@ function checkoutCart(cartId){
 app.post('/', function(req, res){
 	
 	//Launch requests!
-	// var country = req.body.country;
-	// var city = req.body.city;
-	// var type = req.body.didType;
-	// var feature = req.body.feature;
-	// var quantity = req.body.quantity;
 	var country = 'USA';
 	var city = 'NEW YORK';
 	var type = 'GEOGRAPHIC';
@@ -137,8 +132,16 @@ app.post('/', function(req, res){
 	var quantity = 1;
 
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+		console.log(req.body.text);
+		// var string = req.body.text;
+		
+		// var country = req.body.country;
+		// var city = req.body.city;
+		// var type = req.body.didType;
+		// var feature = req.body.feature;
+		// var quantity = req.body.quantity;
 		searchDid(0,1,country, city, type, feature, quantity);
-		console.log(req.body);
+
 	} else{
 		console.log(req.body);
 	}
