@@ -138,7 +138,7 @@ app.post('/', function(req, res){
 
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 		var string = req.body.text;
-		var parameters = string.split(' ');
+		var parameters = string.split(',');
 		console.log('tout va bien');
 		var country = parameters[0];
 		var city = parameters[1];
