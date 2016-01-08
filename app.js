@@ -21,6 +21,8 @@ var headers = {'Accept': 'application/json','Content-type': 'application/json'};
 var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
 
 //Search DID
+function purchase(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
+searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity);
 function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
 	var fid = getFeatureId(featureIds);
 	function getFeatureId(featureIds){
@@ -120,40 +122,23 @@ function checkoutCart(cartId){
         }
     });
 }
-
-
+}
 app.post('/', function(req, res){
 	
 	//Launch requests!
-	// var country = req.body.country;
-	// var city = req.body.city;
-	// var type = req.body.didType;
-	// var feature = req.body.feature;
-	// var quantity = req.body.quantity;
-	// var country = 'USA';
-	// var city = 'NEW YORK';
-	// var type = 'GEOGRAPHIC';
-	// var feature = 'voxsms';
-	// var quantity = 1;
 // /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 		var string = req.body.text;
 		var parameters = string.split(', ');
-		console.log('tout va bien');
 		var country = parameters[0];
 		var city = parameters[1];
 		var type = parameters[2];
 		var feature = parameters[3];
 		var quantity = parameters[4];
-		console.log(parameters[1]);
-		console.log(parameters[2]);
-		console.log(parameters[3]);
-		console.log(parameters[4]);
-		searchDid(0,1,country, city, type, feature, quantity);
+		purchase(0,1,country, city, type, feature, quantity);
 
 	} else{
 		console.log(req.body);
-		console.log('not so good');
 	}
     // console.log('POST /');
     res.setHeader('Content-Type', 'application/json');
