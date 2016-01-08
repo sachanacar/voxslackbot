@@ -131,27 +131,25 @@ app.post('/', function(req, res){
 	// var feature = req.body.feature;
 	// var quantity = req.body.quantity;
 	// var country = 'USA';
-	var city = 'NEW YORK';
+	// var city = 'NEW YORK';
 	// var type = 'GEOGRAPHIC';
-	var feature = 'voxsms';
-	var quantity = 1;
+	// var feature = 'voxsms';
+	// var quantity = 1;
 // /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 		var string = req.body.text;
-		var parameters = string.split(',');
+		var parameters = string.split(', ');
 		console.log('tout va bien');
 		var country = parameters[0];
-		// var city = parameters[1];
+		var city = parameters[1];
 		var type = parameters[2];
-		// var feature = parameters[3];
-		// var quantity = parameters[4];
+		var feature = parameters[3];
+		var quantity = parameters[4];
 		console.log(parameters[1]);
 		console.log(parameters[2]);
 		console.log(parameters[3]);
 		console.log(parameters[4]);
-		setTimeout(function(){ 
-			searchDid(0,1,country, city, type, feature, quantity);
-		 }, 1000);
+		searchDid(0,1,country, city, type, feature, quantity);
 
 	} else{
 		console.log(req.body);
