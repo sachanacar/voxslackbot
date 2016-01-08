@@ -74,6 +74,8 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
             createCart(didid, quantity);
         } else {
         	console.log('could not find DID matching those criteria!');
+        	res.setHeader('Content-Type', 'application/json');
+			res.send('could not find DID matching those criteria!', 200 );
         }
     });
 }
@@ -96,6 +98,8 @@ function createCart(didid, quantity){
             addToCart(didid, quantity, cartId);
         } else {
         	console.log('could not create cart!');
+        	res.setHeader('Content-Type', 'application/json');
+			res.send('could not create cart!', 200 );
         }
     });
 }
@@ -114,6 +118,8 @@ function addToCart(didid, quantity, cartId){
             checkoutCart(cartId);
         } else {
         	console.log('could not add to cart!');
+        	res.setHeader('Content-Type', 'application/json');
+			res.send('could not add to cart!', 200 );
         }
     });
 }
@@ -133,12 +139,16 @@ function checkoutCart(cartId){
             if (body.status == 'WARNING'){
             	console.log(body.productCheckoutList[0].message);
             	res.setHeader('Content-Type', 'application/json');
-				res.send( "yo", 200 );
+				res.send(body.productCheckoutList[0].message, 200 );
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
+        		res.setHeader('Content-Type', 'application/json');
+				res.send("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference, 200 );
             };
         } else {
         	console.log('could not checkout cart!');
+        	res.setHeader('Content-Type', 'application/json');
+			res.send('could not checkout cart!', 200 );
         }
     });
 }
