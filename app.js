@@ -131,7 +131,7 @@ app.post('/', function(req, res){
 	var feature = 'voxsms';
 	var quantity = 1;
 
-	// if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 		body = JSON.parse(req.body);
 		console.log(body.text);
 		// var string = req.body.text;
@@ -143,9 +143,9 @@ app.post('/', function(req, res){
 		// var quantity = req.body.quantity;
 		searchDid(0,1,country, city, type, feature, quantity);
 
-	// } else{
-	// 	console.log(req.body);
-	// }
+	} else{
+		console.log(req.body);
+	}
     // console.log('POST /');
     res.setHeader('Content-Type', 'application/json');
 	res.status(200).send("yo");
