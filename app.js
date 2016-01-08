@@ -19,8 +19,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 var url = 'https://sandbox.voxbone.com/ws-voxbone/services/rest/';
 var headers = {'Accept': 'application/json','Content-type': 'application/json'};
 var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
+app.post('/', function(req, res){
+	
+	//Launch requests!
+// /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
+	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+		var string = req.body.text;
+		var parameters = string.split(', ');
+		var country = parameters[0];
+		var city = parameters[1];
+		var type = parameters[2];
+		var feature = parameters[3];
+		var quantity = parameters[4];
+		purchase(0,1,country, city, type, feature, quantity);
 
-//Search DID
+	} else{
+		console.log(req.body);
+	}
+
+
+	//Search DID
 function purchase(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
 searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity);
 function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
@@ -114,6 +132,8 @@ function checkoutCart(cartId){
         	var body = JSON.parse(body);
             if (body.status == 'WARNING'){
             	console.log(body.productCheckoutList[0].message);
+            	res.setHeader('Content-Type', 'application/json');
+				res.send( "yo", 200 );
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
             };
@@ -123,26 +143,8 @@ function checkoutCart(cartId){
     });
 }
 }
-app.post('/', function(req, res){
-	
-	//Launch requests!
-// /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
-	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
-		var string = req.body.text;
-		var parameters = string.split(', ');
-		var country = parameters[0];
-		var city = parameters[1];
-		var type = parameters[2];
-		var feature = parameters[3];
-		var quantity = parameters[4];
-		purchase(0,1,country, city, type, feature, quantity);
-
-	} else{
-		console.log(req.body);
-	}
     // console.log('POST /');
-    res.setHeader('Content-Type', 'application/json');
-	res.send( "yo", 200 );
+    
     // curl -X PUT 'https://sandbox.voxbone.com/ws-voxbone/services/rest/ordering/cart' -u voxtestsacha:nxyppC2h! -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary $'{"customerReference" : "Client #12345","description" : "Cart for client #12345"}'
 });
 
