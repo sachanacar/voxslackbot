@@ -110,10 +110,10 @@ function checkoutCart(cartId){
 	request.get(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
         	var body = JSON.parse(body);
-        	console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
-
             if (body.status == 'WARNING'){
             	console.log(body.productCheckoutList[0].message);
+            } else{
+        		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
             };
         } else {
         	console.log('could not checkout cart!');
@@ -130,7 +130,7 @@ app.post('/', function(req, res){
 	// var type = req.body.didType;
 	// var feature = req.body.feature;
 	// var quantity = req.body.quantity;
-	var country = 'USA';
+	// var country = 'USA';
 	var city = 'NEW YORK';
 	var type = 'GEOGRAPHIC';
 	var feature = 'voxsms';
@@ -140,7 +140,7 @@ app.post('/', function(req, res){
 		var string = req.body.text;
 		var parameters = string.split(',');
 		console.log('tout va bien');
-		// var country = parameters[0];
+		var country = parameters[0];
 		// var city = parameters[1]+'%';
 		// var type = parameters[2];
 		// var feature = parameters[3];
