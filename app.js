@@ -139,8 +139,10 @@ app.post('/', function(req, res){
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 		searchDid(0,1,country, city, type, feature, quantity);
 		console.log(req.body);
+		console.log('tout va bien');
 	} else{
 		console.log(req.body);
+		console.log('not so good');
 	}
     // console.log('POST /');
     res.setHeader('Content-Type', 'application/json');
