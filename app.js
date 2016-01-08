@@ -144,7 +144,7 @@ app.post('/', function(req, res){
 	}
     // console.log('POST /');
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ message: 'hello' }));
+	res.send( "yo", 200 );
     // curl -X PUT 'https://sandbox.voxbone.com/ws-voxbone/services/rest/ordering/cart' -u voxtestsacha:nxyppC2h! -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary $'{"customerReference" : "Client #12345","description" : "Cart for client #12345"}'
 });
 
