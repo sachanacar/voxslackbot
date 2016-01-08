@@ -125,6 +125,11 @@ function checkoutCart(cartId){
 app.post('/', function(req, res){
 	
 	//Launch requests!
+	// var country = req.body.country;
+	// var city = req.body.city;
+	// var type = req.body.didType;
+	// var feature = req.body.feature;
+	// var quantity = req.body.quantity;
 	var country = 'USA';
 	var city = 'NEW YORK';
 	var type = 'GEOGRAPHIC';
@@ -132,23 +137,14 @@ app.post('/', function(req, res){
 	var quantity = 1;
 
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
-		body = JSON.parse(req.body);
-		console.log(body.text);
-		// var string = req.body.text;
-
-		// var country = req.body.country;
-		// var city = req.body.city;
-		// var type = req.body.didType;
-		// var feature = req.body.feature;
-		// var quantity = req.body.quantity;
 		searchDid(0,1,country, city, type, feature, quantity);
-
+		console.log(req.body);
 	} else{
 		console.log(req.body);
 	}
     // console.log('POST /');
     res.setHeader('Content-Type', 'application/json');
-	res.status(200).send("yo");
+	res.send( "yo", 200 );
     // curl -X PUT 'https://sandbox.voxbone.com/ws-voxbone/services/rest/ordering/cart' -u voxtestsacha:nxyppC2h! -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary $'{"customerReference" : "Client #12345","description" : "Cart for client #12345"}'
 });
 
