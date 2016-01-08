@@ -130,16 +130,24 @@ app.post('/', function(req, res){
 	// var type = req.body.didType;
 	// var feature = req.body.feature;
 	// var quantity = req.body.quantity;
-	var country = 'USA';
-	var city = 'NEW YORK';
-	var type = 'GEOGRAPHIC';
-	var feature = 'voxsms';
-	var quantity = 1;
+	// var country = 'USA';
+	// var city = 'NEW YORK';
+	// var type = 'GEOGRAPHIC';
+	// var feature = 'voxsms';
+	// var quantity = 1;
 
 	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
-		searchDid(0,1,country, city, type, feature, quantity);
-		console.log(req.body.text);
+		var string = req.body.text;
+		var parameters = string.split(' ');
 		console.log('tout va bien');
+		var country = parameters[0];
+		var city = parameters[1];
+		var type = parameters[2];
+		var feature = parameters[3];
+		var quantity = parameters[4];
+		console.log(parameters);
+		searchDid(0,1,country, city, type, feature, quantity);
+
 	} else{
 		console.log(req.body);
 		console.log('not so good');
