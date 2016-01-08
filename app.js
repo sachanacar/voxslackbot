@@ -145,7 +145,7 @@ app.post('/', function(req, res){
 		var type = parameters[2];
 		var feature = parameters[3];
 		var quantity = parameters[4];
-		console.log(parameters);
+		console.log(parameters[0]);
 		searchDid(0,1,country, city, type, feature, quantity);
 
 	} else{
