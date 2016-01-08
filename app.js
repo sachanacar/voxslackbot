@@ -131,7 +131,7 @@ app.post('/', function(req, res){
 	// var feature = req.body.feature;
 	// var quantity = req.body.quantity;
 	// var country = 'USA';
-	// var city = 'NEW YORK';
+	var city = 'NEW YORK';
 	var type = 'GEOGRAPHIC';
 	var feature = 'voxsms';
 	var quantity = 1;
@@ -141,7 +141,7 @@ app.post('/', function(req, res){
 		var parameters = string.split(',');
 		console.log('tout va bien');
 		var country = parameters[0];
-		var city = parameters[1];
+		// var city = parameters[1];
 		// var type = parameters[2];
 		// var feature = parameters[3];
 		// var quantity = parameters[4];
