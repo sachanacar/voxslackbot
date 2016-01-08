@@ -140,12 +140,12 @@ app.post('/', function(req, res){
 		var string = req.body.text;
 		var parameters = string.split(',');
 		console.log('tout va bien');
-		var country = parameters[0];
-		var city = parameters[1];
-		var type = parameters[2];
-		var feature = parameters[3];
-		var quantity = parameters[4];
-		console.log(parameters[0]);
+		var country = parameters[0]+'';
+		var city = parameters[1]+'';
+		var type = parameters[2]+'';
+		var feature = parameters[3]+'';
+		var quantity = parameters[4]+'';
+		console.log(parameters[0]+'');
 		searchDid(0,1,country, city, type, feature, quantity);
 
 	} else{
