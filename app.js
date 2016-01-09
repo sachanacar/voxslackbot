@@ -141,7 +141,7 @@ function checkoutCart(cartId){
             if (body.status == 'WARNING'){
             	console.log(body.productCheckoutList[0].message);
             	res.setHeader('Content-Type', 'application/json');
-				res.send(body.productCheckoutList[0].message, 200 );
+				res.status(200).send(body.productCheckoutList[0].message);
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
         		res.setHeader('Content-Type', 'application/json');
