@@ -16,31 +16,38 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//When ready for production change to api.voxbone.com
 var url = 'https://sandbox.voxbone.com/ws-voxbone/services/rest/';
 var headers = {'Accept': 'application/json','Content-type': 'application/json'};
+
+//Add your own credentials!
 var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
 app.post('/', function(req, res){
 	
-	//Launch requests!
+//Launch requests!
 // /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
-	if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
-		var string = req.body.text;
-		var parameters = string.split(', ');
-		var country = parameters[0];
-		var city = parameters[1];
-		var type = parameters[2];
-		var feature = parameters[3];
-		var quantity = parameters[4];
-		purchase(0,1,country, city, type, feature, quantity);
+if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+	var string = req.body.text;
+	var parameters = string.split(', ');
+	var country = parameters[0];
+	var city = parameters[1];
+	var type = parameters[2];
+	var feature = parameters[3];
+	var quantity = parameters[4];
+	purchase(0,1,country, city, type, feature, quantity);
 
-	} else{
-		console.log(req.body);
-	}
+} else{
+	console.log(req.body);
+	res.send('You are not authorized to reach this endpoint!', 200 );
+}
 
 
-	//Search DID
+//Purchase Mechanism
 function purchase(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
-searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity);
+	searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity);
+
+//Search DID
 function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
 	var fid = getFeatureId(featureIds);
 	function getFeatureId(featureIds){
@@ -153,9 +160,7 @@ function checkoutCart(cartId){
     });
 }
 }
-    // console.log('POST /');
-    
-    // curl -X PUT 'https://sandbox.voxbone.com/ws-voxbone/services/rest/ordering/cart' -u voxtestsacha:nxyppC2h! -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary $'{"customerReference" : "Client #12345","description" : "Cart for client #12345"}'
+
 });
 
 
