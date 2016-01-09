@@ -39,7 +39,7 @@ if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 
 } else{
 	console.log(req.body);
-	res.send('You are not authorized to reach this endpoint!', 200 );
+	res.status(200).send('You are not authorized to reach this endpoint!');
 }
 
 //Search DID
@@ -77,7 +77,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
         } else {
         	console.log('could not find DID matching those criteria!');
         	res.setHeader('Content-Type', 'application/json');
-			res.send('could not find DID matching those criteria!', 200 );
+			res.status(200).send('could not find DID matching those criteria!');
         }
     });
 }
@@ -101,7 +101,7 @@ function createCart(didid, quantity){
         } else {
         	console.log('could not create cart!');
         	res.setHeader('Content-Type', 'application/json');
-			res.send('could not create cart!', 200 );
+			res.status(200).send('could not create cart!');
         }
     });
 }
@@ -121,7 +121,7 @@ function addToCart(didid, quantity, cartId){
         } else {
         	console.log('could not add to cart!');
         	res.setHeader('Content-Type', 'application/json');
-			res.send('could not add to cart!', 200 );
+			res.status(200).send('could not add to cart!');
         }
     });
 }
@@ -150,7 +150,7 @@ function checkoutCart(cartId){
         } else {
         	console.log('could not checkout cart!');
         	res.setHeader('Content-Type', 'application/json');
-			res.send('could not checkout cart!', 200 );
+			res.status(200).send('could not checkout cart!');
         }
     });
 }
