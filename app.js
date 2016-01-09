@@ -140,10 +140,14 @@ function checkoutCart(cartId, response_url){
             	console.log(body.productCheckoutList[0].message);
             	var message = body.productCheckoutList[0].message;
 				sendResponse(message, response_url);
+				res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('There was a problem ordering your DID.');
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
         		console.log(response_url);
         		var message = "Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference;
+        		res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('DID order! Confirmation on its way.');
 	        	sendResponse(message, response_url);
 
             };
