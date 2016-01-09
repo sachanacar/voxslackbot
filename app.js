@@ -143,7 +143,7 @@ function checkoutCart(cartId, response_url){
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
         		console.log(response_url);
-        		var message = "Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
+        		var message = "Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference;
 	        	sendResponse(message, response_url);
 
             };
