@@ -74,7 +74,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
             console.log('[DEBUG] - DID found: '+didid);
             createCart(didid, quantity);
         } else {
-        	console.log(response.body.errors[0].apiErrorMessage);
+        	console.log(response.body);
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not find DID matching those criteria!');
         }
