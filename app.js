@@ -75,7 +75,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
         } else {
         	var body = JSON.parse(body);
         	res.setHeader('Content-Type', 'application/json');
-			res.status(200).send('could not find DID matching those criteria!'+ body.errors[0].apiErrorMessage);
+			res.status(200).send('could not find DID matching those criteria! '+ body.errors[0].apiErrorMessage);
         }
     });
 }
@@ -97,7 +97,6 @@ function createCart(didid, quantity){
         	console.log('[DEBUG] - Cart Created: #'+cartId);
             addToCart(didid, quantity, cartId);
         } else {
-        	console.log('could not create cart!');
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not create cart!');
         }
@@ -117,12 +116,12 @@ function addToCart(didid, quantity, cartId){
             console.log('[DEBUG] - '+quantity+' DIDs of didGroup #'+didid+' added to Cart #'+ cartId);
             checkoutCart(cartId);
         } else {
-        	console.log('could not add to cart!');
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not add to cart!');
         }
     });
 }
+
 //Checkout Cart
 function checkoutCart(cartId){
 	var options = {
@@ -143,17 +142,16 @@ function checkoutCart(cartId){
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
         		res.setHeader('Content-Type', 'application/json');
-				res.send("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference, 200 );
+				res.status(200).send("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
+
             };
         } else {
-        	console.log('could not checkout cart!');
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not checkout cart!');
         }
     });
 }
 });
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
