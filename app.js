@@ -36,7 +36,6 @@ if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 	var feature = parameters[3];
 	var quantity = parameters[4];
 	searchDid(0,1,country, city, type, feature, quantity);
-
 } else{
 	console.log(req.body);
 	res.status(200).send('You are not authorized to reach this endpoint!');
@@ -75,7 +74,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
             console.log('[DEBUG] - DID found: '+didid);
             createCart(didid, quantity);
         } else {
-        	console.log('could not find DID matching those criteria!');
+        	console.log(response);
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not find DID matching those criteria!');
         }
