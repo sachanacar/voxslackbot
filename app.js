@@ -37,7 +37,8 @@ if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 	var quantity = parameters[4];
 	searchDid(0,1,country, city, type, feature, quantity);
 } else{
-	console.log(req.body.apiModule);
+	var body = JSON.parse(req.body);
+	console.log(body.apiModule);
 	res.status(200).send('You are not authorized to reach this endpoint!');
 }
 
