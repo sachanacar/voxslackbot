@@ -35,13 +35,14 @@ if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 	var type = parameters[2];
 	var feature = parameters[3];
 	var quantity = parameters[4];
-	searchDid(0,1,country, city, type, feature, quantity);
+	var response_url = req.body.response_url;
+	searchDid(0,1,country, city, type, feature, quantity, response_url);
 } else{
 	res.status(200).send('You are not authorized to reach this endpoint!');
 }
 
 //Search DID
-function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
+function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity, response_url){
 	var fid = getFeatureId(featureIds);
 	function getFeatureId(featureIds){
 		if (featureIds = null){
@@ -71,7 +72,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
             var body = JSON.parse(body);
             var didid = body.didGroups[0].didGroupId;
             console.log('[DEBUG] - DID found: '+didid);
-            createCart(didid, quantity);
+            createCart(didid, quantity, response_url);
         } else {
         	var body = JSON.parse(body);
         	res.setHeader('Content-Type', 'application/json');
@@ -81,7 +82,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
 }
 
 // Create Cart
-function createCart(didid, quantity){
+function createCart(didid, quantity, response_url){
 	var cr = Math.floor((Math.random() * 100) + 1);
 	var description = "cart #: " + cr;
 	var options = {
@@ -95,7 +96,7 @@ function createCart(didid, quantity){
         	var body = JSON.parse(body);
             var cartId = body.cart.cartIdentifier;
         	console.log('[DEBUG] - Cart Created: #'+cartId);
-            addToCart(didid, quantity, cartId);
+            addToCart(didid, quantity, cartId, response_url);
         } else {
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not create cart!');
@@ -104,7 +105,7 @@ function createCart(didid, quantity){
 }
 
 //Add to Cart
-function addToCart(didid, quantity, cartId){
+function addToCart(didid, quantity, cartId, response_url){
 	var options = {
 		url: url+'ordering/cart/'+cartId+'/product',
 		headers: headers,
@@ -114,7 +115,7 @@ function addToCart(didid, quantity, cartId){
 	request.post(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log('[DEBUG] - '+quantity+' DIDs of didGroup #'+didid+' added to Cart #'+ cartId);
-            checkoutCart(cartId);
+            checkoutCart(cartId, response_url);
         } else {
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not add to cart!');
@@ -123,7 +124,7 @@ function addToCart(didid, quantity, cartId){
 }
 
 //Checkout Cart
-function checkoutCart(cartId){
+function checkoutCart(cartId, response_url){
 	var options = {
 		url: url+'ordering/cart/'+cartId+'/checkout',
 		headers: headers,
@@ -141,6 +142,7 @@ function checkoutCart(cartId){
 				res.status(200).send(body.productCheckoutList[0].message);
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
+        		console.log(response_url);
         		res.setHeader('Content-Type', 'application/json');
 				res.status(200).send("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
 
