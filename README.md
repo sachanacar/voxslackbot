@@ -2,7 +2,9 @@
 
 This SlackBot allows you to automate the provision of phone numbers right into your Slack channel.
 
-More information about development and installation here: 
+![voxslackbot](http://blog.voxbone.com/wp-content/uploads/2016/01/voxslack.gif)
+
+More information about development and installation on the [Voxbone blog](http://blog.voxbone.com/automating-provisioning-slack-voxapi-part-1/)
 
 ## Install
 
@@ -33,6 +35,4 @@ git push heroku master
 heroku logs --tail
 
 //Now that your application is live, add your Heroku app URL int the configuration page of the Slack command you created.
-
-
-## How to use
+````
