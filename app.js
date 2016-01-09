@@ -138,18 +138,33 @@ function checkoutCart(cartId, response_url){
         	var body = JSON.parse(body);
             if (body.status == 'WARNING'){
             	console.log(body.productCheckoutList[0].message);
-            	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send(body.productCheckoutList[0].message);
+            	var message = body.productCheckoutList[0].message;
+				sendResponse(message, response_url);
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
         		console.log(response_url);
-        		res.setHeader('Content-Type', 'application/json');
-				res.status(200).send("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
+        		var message = "Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
+	        	sendResponse(message, response_url);
 
             };
         } else {
         	res.setHeader('Content-Type', 'application/json');
 			res.status(200).send('could not checkout cart!');
+        }
+    });
+}
+
+function sendResponse(message, response_url){
+	var options = {
+		url: response_url,
+		headers: headers,
+		body: JSON.stringify({ text : message }) 
+	};
+	request.post(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+        	console.log(response);
+        } else {
+        	console.log(response);
         }
     });
 }
