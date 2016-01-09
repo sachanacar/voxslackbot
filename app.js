@@ -37,8 +37,6 @@ if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 	var quantity = parameters[4];
 	searchDid(0,1,country, city, type, feature, quantity);
 } else{
-	var body = JSON.parse(req.body);
-	console.log(body);
 	res.status(200).send('You are not authorized to reach this endpoint!');
 }
 
@@ -75,9 +73,9 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
             console.log('[DEBUG] - DID found: '+didid);
             createCart(didid, quantity);
         } else {
-        	console.log(response.body.errors);
+        	var body = JSON.parse(body);
         	res.setHeader('Content-Type', 'application/json');
-			res.status(200).send('could not find DID matching those criteria!');
+			res.status(200).send('could not find DID matching those criteria!'+ body.errors[0]);
         }
     });
 }
