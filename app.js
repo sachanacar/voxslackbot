@@ -75,8 +75,7 @@ function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType
         } else {
         	var body = JSON.parse(body);
         	res.setHeader('Content-Type', 'application/json');
-        	console.log(body.errors[0]);
-			res.status(200).send('could not find DID matching those criteria!'+ body.errors[0]);
+			res.status(200).send('could not find DID matching those criteria!'+ body.errors[0].apiErrorMessage);
         }
     });
 }
