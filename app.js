@@ -35,17 +35,12 @@ if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 	var type = parameters[2];
 	var feature = parameters[3];
 	var quantity = parameters[4];
-	purchase(0,1,country, city, type, feature, quantity);
+	searchDid(0,1,country, city, type, feature, quantity);
 
 } else{
 	console.log(req.body);
 	res.send('You are not authorized to reach this endpoint!', 200 );
 }
-
-
-//Purchase Mechanism
-function purchase(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
-	searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity);
 
 //Search DID
 function searchDid(pageNumber, pageSize, countryCodeA3, cityNamePattern, didType, featureIds, quantity){
@@ -159,8 +154,6 @@ function checkoutCart(cartId){
         }
     });
 }
-}
-
 });
 
 
