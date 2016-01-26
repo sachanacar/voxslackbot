@@ -279,7 +279,7 @@ app.post('/list', function(req, res){
 //Configure DIDs
 // curl localhost:3000/configure -d text="3225887655, sachanacar@getonsip.com, true"
 app.post('/configure', function(req, res){
-	// if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
+	if (req.body.token == 'VDRRVoF0kZnHCjpZHo2JzFGg'){
 		var string = req.body.text;
 		var parameters = string.split(', ');
 		var number = parameters[0];
@@ -288,9 +288,9 @@ app.post('/configure', function(req, res){
 		// var response_url = req.body.response_url;
 		var response_url = 'hello.com';
 		checkUri(0, 1, number, uri, webrtc, response_url);
-	// } else{
-	// 	res.status(200).send('You are not authorized to reach this endpoint!');
-	// }
+	} else{
+		res.status(200).send('You are not authorized to reach this endpoint!');
+	}
 
 	//Check the URI passed to see if it exists
 	function checkUri(pageNumber, pageSize, number, uri, webrtc, response_url){
