@@ -222,13 +222,13 @@ app.post('/list', function(req, res){
 	        		var city = dids[i].cityName;
 	        		var webrtc = dids[i].webRtc;
 	        		var uriId = dids[i].voiceUriId;
-	        		var uri = 'hi';
+	        		var uri = getUri(uriId);
 	        		var number = i+1;
 	        		var message = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
 					sendResponse(message, response_url)
 	        	}
 	        } else {
-	        	console.log(response);
+	        	console.log(body);
 	        	res.setHeader('Content-Type', 'application/json');
 				res.status(200).send('could not create cart!');
 	        }
