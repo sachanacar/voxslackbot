@@ -196,7 +196,7 @@ app.post('/list', function(req, res){
 	} else{
 		res.status(200).send('You are not authorized to reach this endpoint!');
 	}
-
+	//List DIDs
 	function listDids(pageNumber, pageSize, country, e164Pattern, response_url){
 		var options = {
 			url: url+'inventory/did',
@@ -228,12 +228,13 @@ app.post('/list', function(req, res){
 					sendResponse(message, response_url)
 	        	}
 	        } else {
-	        	console.log(body);
+	        	console.log(response);
 	        	res.setHeader('Content-Type', 'application/json');
 				res.status(200).send('could not create cart!');
 	        }
 	    });
 	}
+
 	function sendResponse(message, response_url){
 		var options = {
 			url: response_url,
@@ -248,6 +249,7 @@ app.post('/list', function(req, res){
 	        }
 	    });
 	}
+	//Get Voice URI
 	function getUri(uriId){
 		var options = {
 			url: url+'configuration/voiceuri',
