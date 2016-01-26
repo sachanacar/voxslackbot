@@ -221,8 +221,10 @@ app.post('/list', function(req, res){
 	        		var country = dids[i].countryCodeA3;
 	        		var city = dids[i].cityName;
 	        		var webrtc = dids[i].webRtc;
+	        		var uriId = dids[i].voiceUriId;
+	        		var uri = getUri(uriId);
 	        		var number = i+1;
-	        		var message = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
+	        		var message = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
 					sendResponse(message, response_url)
 	        	}
 	        } else {
@@ -246,6 +248,28 @@ app.post('/list', function(req, res){
 	        }
 	    });
 	}
+	function getUri(uriId){
+		var options = {
+			url: url+'configuration/voiceuri',
+			headers: headers,
+			"auth": auth,
+			qs : {
+		        "pageNumber" : 0,
+		        "pageSize" : 1,
+		        "voiceUriId": uriId,
+	    	} 
+		};
+		request.get(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	console.log(response);
+	        	var uri = response.voiceUris[0].uri;
+	        	console.log(uri);
+	        	return uri;
+	        } else {
+	        	console.log(response);
+	        }
+	    });
+	};
 });
 
 app.post('/configure', function(req, res){
