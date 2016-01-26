@@ -229,8 +229,8 @@ app.post('/list', function(req, res){
 	        	}
 	        } else {
 	        	console.log(body);
-	   //      	res.setHeader('Content-Type', 'application/json');
-				// res.status(200).send('Could not find DIDs!');
+	        	var message_complete = 'Could not find DIDs!';
+			    sendResponse(message_complete, response_url);
 	        }
 	    });
 	}
@@ -256,6 +256,8 @@ app.post('/list', function(req, res){
 				sendResponse(message_complete, response_url);
 	        } else {
 	        	console.log(body);
+	        	var message_complete = 'Could not find URI!';
+			    sendResponse(message_complete, response_url);
 	        }
 	    });
 	};
