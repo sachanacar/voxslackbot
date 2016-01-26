@@ -185,6 +185,7 @@ function sendResponse(message, response_url){
  **/
  //curl localhost:3000/list -d {text="BEL, 660", response_url="localhost:3000"
 
+//List DIDs
 app.post('/list', function(req, res){
 	if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
 		var string = req.body.text;
@@ -196,7 +197,6 @@ app.post('/list', function(req, res){
 	} else{
 		res.status(200).send('You are not authorized to reach this endpoint!');
 	}
-	//List DIDs
 	function listDids(pageNumber, pageSize, country, e164Pattern, response_url){
 		var options = {
 			url: url+'inventory/did',
@@ -230,7 +230,7 @@ app.post('/list', function(req, res){
 	        } else {
 	        	console.log(body);
 	        	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send('could not create cart!');
+				res.status(200).send('Could not find DIDs!');
 	        }
 	    });
 	}
@@ -275,8 +275,127 @@ app.post('/list', function(req, res){
 	}
 });
 
+
+//Configure DIDs
+// curl localhost:3000/configure -d text="3225887655, sachanacar@getonsip.com, true"
 app.post('/configure', function(req, res){
+	// if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
+		var string = req.body.text;
+		var parameters = string.split(', ');
+		var number = parameters[0];
+		var uri = parameters[1];
+		var webrtc = parameters[2];
+		// var response_url = req.body.response_url;
+		var response_url = 'hello.com';
+		checkUri(0, 1, number, uri, webrtc, response_url);
+	// } else{
+	// 	res.status(200).send('You are not authorized to reach this endpoint!');
+	// }
+
+	//Check the URI passed to see if it exists
+	function checkUri(pageNumber, pageSize, number, uri, webrtc, response_url){
+		var options = {
+			url: url+'configuration/voiceuri',
+			headers: headers,
+			"auth": auth,
+			qs : {
+		        "pageNumber" : pageNumber,
+		        "pageSize" : pageSize,
+		        "uri" : uri
+	    	} 
+		};
+		request.get(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	var body = JSON.parse(body);
+	        	var voiceUri = body.voiceUris[0];
+	        	if (voiceUri != null) {
+	        		//URI exists -> link URI
+	        		var uriId = voiceUri.voiceUriId;
+					console.log('[DEBUG] - URI exists -> Linking URI...');
+	        		getDid(0, 1, number, uri, webrtc, uriId);
+	        	}else{
+	        		//URI does not exist -> Create URI
+					console.log('[DEBUG] - URI does not exist -> Creating URI...');
+					createUri(number, uri, webrtc, uriId);
+	        	}
+	        } else {
+	        	console.log(body);
+	        	res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('Error while trying to find URI');
+	        }
+	    });
+	}
+	//Create URI
+	function createUri(number, uri, webrtc, uriId){
+		var options = {
+			url: url+'configuration/voiceuri',
+			headers: headers,
+			"auth": auth,
+			body: JSON.stringify({ voiceUri : {voiceUriId: uriId, backupUriId : null, voiceUriProtocol: "SIP", uri: uri, description: "uri for "+number}}) 
+		};
+		request.put(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	console.log('[DEBUG] - URI Created -> Linking URI');
+	        	getDid(0, 1, number, uri, webrtc, uriId);
+
+	        } else {
+	        	console.log('[DEBUG] - Creating URI unsuccessful!');
+	        	console.log(body);
+	        	res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('Error creating URI!');
+	        }
+	    });
+	}
+	//Get DID ID information to use in linkUri
+	function getDid(pageNumber, pageSize, number, uri, webrtc, uriId){
+		var options = {
+			url: url+'inventory/did',
+			headers: headers,
+			"auth": auth,
+			qs : {
+		        "pageNumber" : pageNumber,
+		        "pageSize" : pageSize,
+		        "e164Pattern" : '%'+number+'%'
+	    	} 
+		};
+		request.get(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	var body = JSON.parse(body);
+	        	var didId = body.dids[0].didId;
+	        	console.log('[DEBUG] - DID ID found -> Linking URI...');
+	        	linkUri(number, uri, webrtc, uriId, didId);
+	        } else {
+	        	console.log('[DEBUG] - DID ID not found -> aborting...');
+	        	console.log(body);
+	        	res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('Could not find DID!');
+	        }
+	    });
+	}
 	
+	//Link URI to DID
+	function linkUri(number, uri, webrtc, uriId, didId){
+		var options = {
+			url: url+'configuration/configuration',
+			headers: headers,
+			"auth": auth,
+			body: JSON.stringify({ didIds : [ didId ],voiceUriId: uriId, webRtcEnabled: webrtc}) 
+		};
+		request.post(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	console.log('[DEBUG] - Linking successful!');
+	        	console.log(body);
+	        	res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('URI: '+ uri + ' has been linked to '+ number+ ' and webRTC functionality set to '+ webrtc);
+	        } else {
+	        	console.log('[DEBUG] - Linking unsuccessful!');
+	        	console.log(body);
+	        	res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('Error linking URI!');
+	        }
+	    });
+	}
+
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
