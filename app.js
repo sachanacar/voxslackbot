@@ -22,12 +22,13 @@ var url = 'https://sandbox.voxbone.com/ws-voxbone/services/rest/';
 var headers = {'Accept': 'application/json','Content-type': 'application/json'};
 
 //Add your own credentials!
-var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
+var auth = {'user': 'your_voxapi_username', 'pass': 'your_voxapi_password'}
+
 app.post('/', function(req, res){
 	
 //Launch requests!
 // /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
-if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+if (req.body.token == 'your_slack_channel_token'){
 	var string = req.body.text;
 	var parameters = string.split(', ');
 	var country = parameters[0];
@@ -137,14 +138,12 @@ function checkoutCart(cartId, response_url){
         if (!error && response.statusCode == 200) {
         	var body = JSON.parse(body);
             if (body.status == 'WARNING'){
-            	console.log(body.productCheckoutList[0].message);
             	var message = body.productCheckoutList[0].message;
 				sendResponse(message, response_url);
 				res.setHeader('Content-Type', 'application/json');
 				res.status(200).send('There was a problem ordering your DID.');
             } else{
         		console.log("Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference);
-        		console.log(response_url);
         		var message = "Your DID has been purchase and your order reference # is: "+body.productCheckoutList[0].orderReference;
         		res.setHeader('Content-Type', 'application/json');
 				res.status(200).send('DID order! Confirmation on its way.');
