@@ -186,7 +186,8 @@ function sendResponse(message, response_url){
  //curl localhost:3000/list -d {text="BEL, 660", response_url="localhost:3000"
 
 app.post('/list', function(req, res){
-console.log(req.body);
+		console.log(req.body);
+		console.log('hello!');
 	if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
 		var string = req.body.text;
 		var parameters = string.split(', ');
