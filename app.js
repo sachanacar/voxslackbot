@@ -267,9 +267,9 @@ app.post('/list', function(req, res){
 		};
 		request.post(options, function (error, response, body) {
 	        if (!error && response.statusCode == 200) {
-	        	console.log(response);
+	        	console.log(body);
 	        } else {
-	        	console.log(response);
+	        	console.log(body);
 	        }
 	    });
 	}
