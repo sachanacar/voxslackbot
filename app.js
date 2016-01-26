@@ -255,7 +255,7 @@ app.post('/list', function(req, res){
 				console.log('[DEBUG] - URI found! ID: '+uriId+ 'URI: '+uri);
 				sendResponse(message_complete, response_url);
 	        } else {
-	        	console.log(response);
+	        	console.log(body);
 	        }
 	    });
 	};
