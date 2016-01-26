@@ -249,8 +249,8 @@ app.post('/list', function(req, res){
 		};
 		request.get(options, function (error, response, body) {
 	        if (!error && response.statusCode == 200) {
-	        	console.log(response);
-	        	var uri = response.voiceUris[0].uri;
+	        	var body = JSON.parse(body);
+	        	var uri = body.voiceUris[0].uri;
 	        	var message_complete = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
 				console.log('[DEBUG] - URI found! ID: '+uriId+ 'URI: '+uri);
 				sendResponse(message_complete, response_url);
