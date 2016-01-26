@@ -225,6 +225,7 @@ app.post('/list', function(req, res){
 	        		var number = i+1;
 	        		var message_incomplete = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
 					getUri(message_incomplete, uriId, response_url);
+					console.log('[DEBUG] - DIDs found: #'+dids[i].didId+' uriId: '+ uriId);
 	        	}
 	        } else {
 	        	console.log(body);
@@ -250,8 +251,8 @@ app.post('/list', function(req, res){
 	        if (!error && response.statusCode == 200) {
 	        	console.log(response);
 	        	var uri = response.voiceUris[0].uri;
-	        	console.log(uri);
 	        	var message_complete = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
+				console.log('[DEBUG] - URI found! ID: '+uriId+ 'URI: '+uri);
 				sendResponse(message_complete, response_url);
 	        } else {
 	        	console.log(response);
