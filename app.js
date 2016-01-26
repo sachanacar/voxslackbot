@@ -222,7 +222,7 @@ app.post('/list', function(req, res){
 	        		var city = dids[i].cityName;
 	        		var webrtc = dids[i].webRtc;
 	        		var uriId = dids[i].voiceUriId;
-	        		var uri = getUri(uriId);
+	        		var uri = 'hi';
 	        		var number = i+1;
 	        		var message = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
 					sendResponse(message, response_url)
