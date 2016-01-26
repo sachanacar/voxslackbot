@@ -222,10 +222,9 @@ app.post('/list', function(req, res){
 	        		var city = dids[i].cityName;
 	        		var webrtc = dids[i].webRtc;
 	        		var uriId = dids[i].voiceUriId;
-	        		var uri = getUri(uriId);
 	        		var number = i+1;
-	        		var message = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
-					sendResponse(message, response_url)
+	        		var message_incomplete = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
+					getUri(message_incomplete, uriId, response_url);
 	        	}
 	        } else {
 	        	console.log(body);
@@ -235,22 +234,8 @@ app.post('/list', function(req, res){
 	    });
 	}
 
-	function sendResponse(message, response_url){
-		var options = {
-			url: response_url,
-			headers: headers,
-			body: JSON.stringify({ text : message }) 
-		};
-		request.post(options, function (error, response, body) {
-	        if (!error && response.statusCode == 200) {
-	        	console.log(response);
-	        } else {
-	        	console.log(response);
-	        }
-	    });
-	}
 	//Get Voice URI
-	function getUri(uriId){
+	function getUri(message_incomplete, uriId, response_url){
 		var options = {
 			url: url+'configuration/voiceuri',
 			headers: headers,
@@ -266,12 +251,27 @@ app.post('/list', function(req, res){
 	        	console.log(response);
 	        	var uri = response.voiceUris[0].uri;
 	        	console.log(uri);
-	        	return uri;
+	        	var message_complete = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc+' | uri: '+uri;
+				sendResponse(message_complete, response_url);
 	        } else {
 	        	console.log(response);
 	        }
 	    });
 	};
+	function sendResponse(message_complete, response_url){
+		var options = {
+			url: response_url,
+			headers: headers,
+			body: JSON.stringify({ text : message_complete }) 
+		};
+		request.post(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	console.log(response);
+	        } else {
+	        	console.log(response);
+	        }
+	    });
+	}
 });
 
 app.post('/configure', function(req, res){
