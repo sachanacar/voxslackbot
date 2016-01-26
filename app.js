@@ -22,7 +22,13 @@ var url = 'https://sandbox.voxbone.com/ws-voxbone/services/rest/';
 var headers = {'Accept': 'application/json','Content-type': 'application/json'};
 
 //Add your own credentials!
-var auth = {'user': 'your_voxapi_username', 'pass': 'your_voxapi_password'}
+var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
+
+
+/**
+ **  Part 1
+ **  Order DIDs
+ **/
 
 app.post('/', function(req, res){
 	
@@ -173,6 +179,79 @@ function sendResponse(message, response_url){
 }
 });
 
+/**
+ **  Part 2
+ **  Configure DIDs
+ **/
+ //curl localhost:3000/list -d {text="BEL, 660", response_url="localhost:3000"
+
+app.post('/list', function(req, res){
+
+	if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
+		var string = req.body.text;
+		var parameters = string.split(', ');
+		var country = parameters[0];
+		var e164Pattern = parameters[1];
+		var response_url = req.body.response_url;
+		listDids(0,5000,country,e164Pattern);
+	} else{
+		res.status(200).send('You are not authorized to reach this endpoint!');
+	}
+
+	function listDids(pageNumber, pageSize, country, e164Pattern, response_url){
+		var options = {
+			url: url+'inventory/did',
+			headers: headers,
+			"auth": auth,
+			qs : {
+		        "pageNumber" : pageNumber,
+		        "pageSize" : pageSize,
+		        "countryCodeA3" : country,
+		        "e164Pattern": '%'+e164Pattern+'%',
+	    	} 
+		};
+		request.get(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	var body = JSON.parse(body);
+	        	console.log(body);
+	        	var dids = body.dids;
+	        	for (i=0; i<dids.length; i++) {
+	        		var didId = dids[i].didId;
+	        		var e164 = dids[i].e164;
+	        		var type = dids[i].type;
+	        		var country = dids[i].countryCodeA3;
+	        		var city = dids[i].cityName;
+	        		var webrtc = dids[i].webRtc;
+	        		var number = i+1;
+	        		var message = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
+					sendResponse(message, response_url)
+	        	}
+	        } else {
+	        	console.log(body);
+	        	res.setHeader('Content-Type', 'application/json');
+				res.status(200).send('could not create cart!');
+	        }
+	    });
+	}
+	function sendResponse(message, response_url){
+		var options = {
+			url: response_url,
+			headers: headers,
+			body: JSON.stringify({ text : message }) 
+		};
+		request.post(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	console.log(response);
+	        } else {
+	        	console.log(response);
+	        }
+	    });
+	}
+});
+
+app.post('/configure', function(req, res){
+	
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
