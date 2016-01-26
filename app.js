@@ -321,8 +321,9 @@ app.post('/configure', function(req, res){
 	        	}
 	        } else {
 	        	console.log(body);
-	        	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send('Error while trying to find URI');
+				var message = 'Error while trying to find URI';
+				sendResponse(message, response_url);
+
 	        }
 	    });
 	}
@@ -342,8 +343,8 @@ app.post('/configure', function(req, res){
 	        } else {
 	        	console.log('[DEBUG] - Creating URI unsuccessful!');
 	        	console.log(body);
-	        	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send('Error creating URI!');
+	        	var message = 'Error creating URI!';
+	        	sendResponse(message, response_url);
 	        }
 	    });
 	}
