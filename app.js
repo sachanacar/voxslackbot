@@ -186,15 +186,13 @@ function sendResponse(message, response_url){
  //curl localhost:3000/list -d {text="BEL, 660", response_url="localhost:3000"
 
 app.post('/list', function(req, res){
-		console.log(req.body);
-		console.log('hello!')
 	if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
 		var string = req.body.text;
 		var parameters = string.split(', ');
 		var country = parameters[0];
 		var e164Pattern = parameters[1];
 		var response_url = req.body.response_url;
-		listDids(0,5000,country,e164Pattern);
+		listDids(0,5000,country,e164Pattern, response_url);
 	} else{
 		res.status(200).send('You are not authorized to reach this endpoint!');
 	}
