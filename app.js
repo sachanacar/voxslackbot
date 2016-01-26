@@ -278,6 +278,7 @@ app.post('/list', function(req, res){
 
 //Configure DIDs
 // curl localhost:3000/configure -d text="3225887655, sachanacar@getonsip.com, true"
+// /configure 3225887655, sachanacar@getonsip.com, true
 app.post('/configure', function(req, res){
 	if (req.body.token == 'VDRRVoF0kZnHCjpZHo2JzFGg'){
 		var string = req.body.text;
@@ -312,11 +313,11 @@ app.post('/configure', function(req, res){
 	        		//URI exists -> link URI
 	        		var uriId = voiceUri.voiceUriId;
 					console.log('[DEBUG] - URI exists -> Linking URI...');
-	        		getDid(0, 1, number, uri, webrtc, uriId);
+	        		getDid(0, 1, number, uri, webrtc, uriId, response_url);
 	        	}else{
 	        		//URI does not exist -> Create URI
 					console.log('[DEBUG] - URI does not exist -> Creating URI...');
-					createUri(number, uri, webrtc, uriId);
+					createUri(number, uri, webrtc, uriId, response_url);
 	        	}
 	        } else {
 	        	console.log(body);
@@ -326,7 +327,7 @@ app.post('/configure', function(req, res){
 	    });
 	}
 	//Create URI
-	function createUri(number, uri, webrtc, uriId){
+	function createUri(number, uri, webrtc, uriId, response_url){
 		var options = {
 			url: url+'configuration/voiceuri',
 			headers: headers,
@@ -336,7 +337,7 @@ app.post('/configure', function(req, res){
 		request.put(options, function (error, response, body) {
 	        if (!error && response.statusCode == 200) {
 	        	console.log('[DEBUG] - URI Created -> Linking URI');
-	        	getDid(0, 1, number, uri, webrtc, uriId);
+	        	getDid(0, 1, number, uri, webrtc, uriId, response_url);
 
 	        } else {
 	        	console.log('[DEBUG] - Creating URI unsuccessful!');
@@ -347,7 +348,7 @@ app.post('/configure', function(req, res){
 	    });
 	}
 	//Get DID ID information to use in linkUri
-	function getDid(pageNumber, pageSize, number, uri, webrtc, uriId){
+	function getDid(pageNumber, pageSize, number, uri, webrtc, uriId, response_url){
 		var options = {
 			url: url+'inventory/did',
 			headers: headers,
@@ -363,7 +364,7 @@ app.post('/configure', function(req, res){
 	        	var body = JSON.parse(body);
 	        	var didId = body.dids[0].didId;
 	        	console.log('[DEBUG] - DID ID found -> Linking URI...');
-	        	linkUri(number, uri, webrtc, uriId, didId);
+	        	linkUri(number, uri, webrtc, uriId, didId, response_url);
 	        } else {
 	        	console.log('[DEBUG] - DID ID not found -> aborting...');
 	        	console.log(body);
@@ -374,7 +375,7 @@ app.post('/configure', function(req, res){
 	}
 	
 	//Link URI to DID
-	function linkUri(number, uri, webrtc, uriId, didId){
+	function linkUri(number, uri, webrtc, uriId, didId, response_url){
 		var options = {
 			url: url+'configuration/configuration',
 			headers: headers,
@@ -385,16 +386,31 @@ app.post('/configure', function(req, res){
 	        if (!error && response.statusCode == 200) {
 	        	console.log('[DEBUG] - Linking successful!');
 	        	console.log(body);
-	        	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send('URI: '+ uri + ' has been linked to '+ number+ ' and webRTC functionality set to '+ webrtc);
+	        	var message = 'URI: '+ uri + ' has been linked to '+ number+ ' and webRTC functionality set to '+ webrtc;
+				sendResponse(message, response_url);
 	        } else {
 	        	console.log('[DEBUG] - Linking unsuccessful!');
 	        	console.log(body);
-	        	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send('Error linking URI!');
+	        	var message = 'Error linking URI!';
+	        	sendResponse(message, response_url);
 	        }
 	    });
 	}
+	function sendResponse(message, response_url){
+		var options = {
+			url: response_url,
+			headers: headers,
+			body: JSON.stringify({ text : message }) 
+		};
+		request.post(options, function (error, response, body) {
+	        if (!error && response.statusCode == 200) {
+	        	console.log(body);
+	        } else {
+	        	console.log(body);
+	        }
+	    });
+	}
+
 
 });
 // catch 404 and forward to error handler
