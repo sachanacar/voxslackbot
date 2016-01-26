@@ -286,8 +286,7 @@ app.post('/configure', function(req, res){
 		var number = parameters[0];
 		var uri = parameters[1];
 		var webrtc = parameters[2];
-		// var response_url = req.body.response_url;
-		var response_url = 'hello.com';
+		var response_url = req.body.response_url;
 		checkUri(0, 1, number, uri, webrtc, response_url);
 	} else{
 		res.status(200).send('You are not authorized to reach this endpoint!');
