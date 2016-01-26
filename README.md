@@ -4,7 +4,7 @@ This SlackBot allows you to automate the provision of phone numbers right into y
 
 ![voxslackbot](http://blog.voxbone.com/wp-content/uploads/2016/01/voxslack.gif)
 
-More information about development and installation on the [Voxbone blog](http://blog.voxbone.com/automating-provisioning-slack-voxapi-part-1/)
+More information about development and installation on the [Voxbone blog](http://blog.voxbone.com/automating-provisioning-slack-voxapi-part-1/).
 
 ## Install
 
