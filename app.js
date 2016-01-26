@@ -229,8 +229,8 @@ app.post('/list', function(req, res){
 	        	}
 	        } else {
 	        	console.log(body);
-	        	res.setHeader('Content-Type', 'application/json');
-				res.status(200).send('Could not find DIDs!');
+	   //      	res.setHeader('Content-Type', 'application/json');
+				// res.status(200).send('Could not find DIDs!');
 	        }
 	    });
 	}
