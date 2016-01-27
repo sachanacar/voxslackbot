@@ -262,7 +262,7 @@ app.post('/list', function(req, res){
 	        		var uriId = dids[i].voiceUriId;
 	        		var number = i+1;
 	        		//This message is incomplete because it is missing the actual URI - which we retrieve in getUri()
-	        		var message_incomplete = number+') '+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
+	        		var message_incomplete = '\n'+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
 					getUri(message_incomplete, uriId, response_url);
 					console.log('[DEBUG] - DIDs found: #'+dids[i].didId+' uriId: '+ uriId);
 	        	}
@@ -322,7 +322,8 @@ app.post('/list', function(req, res){
 
 //Configure DIDs
 // curl localhost:3000/configure -d text="3225887655, sachanacar@getonsip.com, true"
-// /configure 3225887655, sachanacar@getonsip.com, true
+// /configure 3225887655, sachanacar@getit.com, true
+// /list BEL, 3225887655
 app.post('/configure', function(req, res){
 	if (req.body.token == 'VDRRVoF0kZnHCjpZHo2JzFGg'){
 		//Get the incoming string of text from Slack
