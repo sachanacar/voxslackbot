@@ -22,7 +22,7 @@ var url = 'https://sandbox.voxbone.com/ws-voxbone/services/rest/';
 var headers = {'Accept': 'application/json','Content-type': 'application/json'};
 
 //Add your own credentials!
-var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
+var auth = {'user': 'your_voxapi_username', 'pass': 'your_voxapi_password'}
 
 
 /**
@@ -33,8 +33,7 @@ var auth = {'user': 'voxtestsacha', 'pass': 'nxyppC2h!'}
 app.post('/', function(req, res){
 	
 //Launch requests!
-// /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
-if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
+if (req.body.token == 'your_slack_command_token'){
 	//Get the incoming string of text from Slack
 	var string = req.body.text;
 	//Split the string into parameters separated by a comma and a space
@@ -208,11 +207,10 @@ function sendResponse(message, response_url){
  **  Part 2
  **  Configure DIDs
  **/
- //curl localhost:3000/list -d {text="BEL, 660", response_url="localhost:3000"
 
 //List DIDs
 app.post('/list', function(req, res){
-	if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
+	if (req.body.token == 'your_slack_command_token'){
 	    //Get the incoming string of text from Slack
 	    var string = req.body.text;
 
@@ -321,11 +319,8 @@ app.post('/list', function(req, res){
 
 
 //Configure DIDs
-// curl localhost:3000/configure -d text="3225887655, sachanacar@getonsip.com, true"
-// /configure 3225887655, sachanacar@getit.com, true
-// /list BEL, 3225887655
 app.post('/configure', function(req, res){
-	if (req.body.token == 'VDRRVoF0kZnHCjpZHo2JzFGg'){
+	if (req.body.token == 'your_slack_command_token'){
 		//Get the incoming string of text from Slack
 		var string = req.body.text;
 		//Split the string into parameters separated by a comma and a space
