@@ -34,7 +34,7 @@ app.post('/', function(req, res){
 	
 //Launch requests!
 // /did USA, NEW YORK, GEOGRAPHIC, voxsms, 1
-if (req.body.token == 'your_slack_channel_token'){
+if (req.body.token == '6P3xHipAHZkYezgbHHnQjGLj'){
 	//Get the incoming string of text from Slack
 	var string = req.body.text;
 	//Split the string into parameters separated by a comma and a space
@@ -263,8 +263,8 @@ app.post('/list', function(req, res){
 	        		var number = i+1;
 	        		//This message is incomplete because it is missing the actual URI - which we retrieve in getUri()
 	        		var message_incomplete = '\n'+'number: '+e164+' | id: '+didId+' | type: '+type+' | country: '+country+' | city: '+city+' | webrtc: '+ webrtc;
-					getUri(message_incomplete, uriId, response_url);
 					console.log('[DEBUG] - DIDs found: #'+dids[i].didId+' uriId: '+ uriId);
+					getUri(message_incomplete, uriId, response_url);
 	        	}
 	        } else {
 	        	//If something goes wrong, we send back to the Slack Channel a notification
