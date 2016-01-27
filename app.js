@@ -212,7 +212,7 @@ function sendResponse(message, response_url){
 
 //List DIDs
 app.post('/list', function(req, res){
-	if (req.body.token == 'gIkuvaNzQIHg97ATvDxBdjtH'){
+	if (req.body.token == '5MJZXfPJGsc1x9Rv9UpIyaUh'){
 	    //Get the incoming string of text from Slack
 	    var string = req.body.text;
 
