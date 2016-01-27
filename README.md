@@ -2,9 +2,15 @@
 
 This SlackBot allows you to automate the provision of phone numbers right into your Slack channel.
 
-![voxslackbot](http://blog.voxbone.com/wp-content/uploads/2016/01/voxslack.gif)
+![voxslackbot-buy](http://blog.voxbone.com/wp-content/uploads/2016/01/voxslack.gif)
+![voxslackbot-list1](http://blog.voxbone.com/wp-content/uploads/2016/01/list-1.gif)
+![voxslackbot-configure](http://blog.voxbone.com/wp-content/uploads/2016/01/configure-1.gif)
+![voxslackbot-list2](http://blog.voxbone.com/wp-content/uploads/2016/01/list-2.gif)
 
-More information about development and installation on the [Voxbone blog](http://blog.voxbone.com/automating-provisioning-slack-voxapi-part-1/).
+
+More information about development and installation on the Voxbone blog:
+*   [Part 1](http://blog.voxbone.com/automating-provisioning-slack-voxapi-part-1/).
+*   [Part 2](http://blog.voxbone.com/automating-provisioning-slack-voxapi-part-2/)
 
 ## Install
 
